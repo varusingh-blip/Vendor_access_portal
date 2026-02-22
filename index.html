@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enterprise Vendor Portal</title>
+
+<style>
+:root {
+    --bg: #f4f6f9;
+    --sidebar: #1f2937;
+    --card: #ffffff;
+    --text: #111827;
+    --accent: #2563eb;
+}
+
+body.dark {
+    --bg: #111827;
+    --sidebar: #0f172a;
+    --card: #1f2937;
+    --text: #f1f5f9;
+    --accent: #3b82f6;
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    transition: 0.3s ease;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 240px;
+    background: var(--sidebar);
+    color: white;
+    padding: 25px 15px;
+    min-height: 100vh;
+}
+
+.sidebar h2 {
+    margin-top: 0;
+    font-size: 18px;
+    margin-bottom: 25px;
+}
+
+.sidebar button {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    background: transparent;
+    border: none;
+    color: white;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.sidebar button:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+/* Main */
+.main {
+    flex: 1;
+    padding: 30px;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+input {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    width: 250px;
+}
+
+.toggle {
+    padding: 8px 14px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* Cards */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: var(--card);
+    padding: 18px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card a {
+    text-decoration: none;
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.category {
+    display: none;
+}
+
+.category.active {
+    display: block;
+}
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+    <h2>Vendor Portal</h2>
+    <button onclick="showCategory('all')">All</button>
+    <button onclick="showCategory('wan')">WAN / ISP</button>
+    <button onclick="showCategory('cloud')">Cloud</button>
+    <button onclick="showCategory('colo')">Colocation</button>
+    <button onclick="showCategory('hardware')">Hardware</button>
+    <button onclick="showCategory('internal')">Internal Tools</button>
+</div>
+
+<div class="main">
+
+<div class="topbar">
+    <input type="text" id="search" placeholder="Search vendor...">
+    <button class="toggle" onclick="toggleDark()">Dark Mode</button>
+</div>
+
+<!-- WAN / ISP -->
+<div class="category active" id="wan">
+<div class="grid">
+    <div class="card"><a href="https://envision.gtt.net/tickets" target="_blank">GTT Envision</a></div>
+    <div class="card"><a href="https://www.arelion.com/portal/login" target="_blank">My Arelion</a></div>
+    <div class="card"><a href="https://controlcenter.lumen.com/" target="_blank">Lumen Control Center</a></div>
+    <div class="card"><a href="https://tranzact.zayo.com/" target="_blank">Zayo Tranzact</a></div>
+    <div class="card"><a href="https://servicecentral.service-now.com/notificationPortal/" target="_blank">Telstra Support</a></div>
+</div>
+</div>
+
+<!-- Cloud -->
+<div class="category" id="cloud">
+<div class="grid">
+    <div class="card"><a href="https://cloud.oracle.com/" target="_blank">Oracle Cloud</a></div>
+    <div class="card"><a href="https://support.oracle.com/" target="_blank">Oracle Support</a></div>
+    <div class="card"><a href="https://portal.azure.com/" target="_blank">Microsoft Azure</a></div>
+    <div class="card"><a href="https://signin.aws.amazon.com/saml" target="_blank">AWS SSO</a></div>
+</div>
+</div>
+
+<!-- Colocation -->
+<div class="category" id="colo">
+<div class="grid">
+    <div class="card"><a href="https://mycoresite.coresite.com/CC_Login" target="_blank">CoreSite</a></div>
+</div>
+</div>
+
+<!-- Hardware -->
+<div class="category" id="hardware">
+<div class="grid">
+    <div class="card"><a href="https://www.arista.com/en" target="_blank">Arista</a></div>
+    <div class="card"><a href="https://www.cv-prod-us-central1-c.arista.io/" target="_blank">Arista cVaaS</a></div>
+    <div class="card"><a href="https://supportportal.juniper.net/" target="_blank">Juniper</a></div>
+    <div class="card"><a href="https://support.fortinet.com/" target="_blank">Fortinet</a></div>
+</div>
+</div>
+
+<!-- Internal -->
+<div class="category" id="internal">
+<div class="grid">
+    <div class="card"><a href="https://gui.prod.netq.nvidia.com/" target="_blank">NVIDIA NetQ</a></div>
+    <div class="card"><a href="https://client.wvd.microsoft.com/" target="_blank">GDCO (Azure WVD)</a></div>
+    <div class="card"><a href="https://enterprise-support.nvidia.com/s/" target="_blank">Cumulus Support</a></div>
+</div>
+</div>
+
+</div>
+
+<script>
+function showCategory(cat) {
+    const categories = document.querySelectorAll(".category");
+    categories.forEach(c => c.classList.remove("active"));
+
+    if (cat === "all") {
+        categories.forEach(c => c.classList.add("active"));
+    } else {
+        document.getElementById(cat).classList.add("active");
+    }
+}
+
+function toggleDark() {
+    document.body.classList.toggle("dark");
+}
+
+const searchInput = document.getElementById("search");
+searchInput.addEventListener("keyup", function() {
+    const filter = searchInput.value.toLowerCase();
+    const cards = document.querySelectorAll(".card");
+    cards.forEach(card => {
+        const text = card.innerText.toLowerCase();
+        card.style.display = text.includes(filter) ? "block" : "none";
+    });
+});
+</script>
+
+</body>
+</html>
